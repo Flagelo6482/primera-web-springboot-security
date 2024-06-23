@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Animales</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/listar.css}">
+    <script src="https://kit.fontawesome.com/117af60cc7.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+
+    <div class="contenedor">
+        <div class="titulo">
+            <h1>Listado de Animales</h1>
+        </div>
+
+
+        <div class="tabla">
+            <table>
+                <!--Muestra del encabezado de la tabla-->
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Sexo</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--Muestra los registros-->
+                <tr th:each="animal: ${animalesLista}">
+                    <td th:text="${animal.id}"></td>
+                    <td th:text="${animal.nombre}"></td>
+                    <td th:text="${animal.sexo}"></td>
+                    <td>
+                        <a th:href="@{/animales/editar/{id}(id=${animal.id})}">Editar</a>
+                        <a th:href="@{/animales/eliminar/{id}(id=${animal.id})}">Eliminar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="boton">
+            <a href="/animales/nueva"><i class="fa-solid fa-dog"></i> Nuevo Animal</a>
+        </div>
+        <div class="social">
+            <a href="https://www.facebook.com/Francisco.loquito" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://github.com/Flagelo6482" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/francisco-jes%C3%BAs-sono-callla-820a6526a/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+    </div>
+</body>
+</html>

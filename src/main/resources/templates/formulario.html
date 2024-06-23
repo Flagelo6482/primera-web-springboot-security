@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/formulario.css}">
+    <script src="https://kit.fontawesome.com/117af60cc7.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <div class="contenedor">
+    <div class="titulo">
+        <h1>Formulario de Animal</h1>
+    </div>
+
+    <div class="form">
+        <!--
+    th:objet: estamos indicando el objeto que se trabajara con el formulario, osea el objeto "animal", que pasamos
+    desde el modelo(Model model) "controller"
+    th:action: Es para especificar la URL destino a donde enviaremos el formulario cuando seleccionemos el "boton" todos
+    los datos se aplicaran en el objeto "animal"
+    th:field="*{nombre}": Con esta expresion accedemos a un valor(nombre) de un objeto(animal), osea enlaca automaticamente
+    a un campo de dicho objeto(animal) y al escribir en dicho campo se lo asignaremos
+    method="post": El "post" es para crear
+    -->
+        <form th:object="${animal}" th:action="${accion}" method="post">
+            <!--Campo oculto-->
+            <input type="hidden" th:field="*{id}" />
+
+            <label>Nombre: <input type="text" th:field="*{nombre}" /></label
+            ><br />
+            <label>Sexo: <input type="text" th:field="*{sexo}" /></label><br />
+            <button type="submit"><i class="fa-solid fa-paw"></i>Guardar Animal</button>
+        </form>
+    </div>
+
+    <div class="link">
+        <a href="/animales">Volver a la lista de Animales</a>
+    </div>
+    <div class="social">
+        <a href="https://www.facebook.com/Francisco.loquito" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+        <a href="https://github.com/Flagelo6482" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/francisco-jes%C3%BAs-sono-callla-820a6526a/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+    </div>
+</div>
+
+</body>
+</html>
