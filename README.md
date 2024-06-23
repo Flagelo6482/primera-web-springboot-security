@@ -1,4 +1,5 @@
 ## Proyecto CRUD con SPRING BOOT
 
-# Prueba
-hola
+# Cosas Aprendidas:
+
+![](https://www.qindel.com/wp-content/uploads/2023/04/spring-boot.jpeg)
