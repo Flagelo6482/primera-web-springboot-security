@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Listado de Animales</title>
@@ -23,7 +24,7 @@
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Sexo</th>
-                    <th>Acciones</th>
+                    <th sec:authorize="hasRole('ADMIN')">Acciones</th> <!--Solamente los usuarios con rol de "ADMIN" lo podrán usar >:D-->
                 </tr>
                 </thead>
                 <tbody>
@@ -32,7 +33,7 @@
                     <td th:text="${animal.id}"></td>
                     <td th:text="${animal.nombre}"></td>
                     <td th:text="${animal.sexo}"></td>
-                    <td>
+                    <td sec:authorize="hasRole('ADMIN')">
                         <a th:href="@{/animales/editar/{id}(id=${animal.id})}">Editar</a>
                         <a th:href="@{/animales/eliminar/{id}(id=${animal.id})}">Eliminar</a>
                     </td>
@@ -40,7 +41,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="boton">
+        <div class="boton" sec:authorize="hasRole('ADMIN')">
             <a href="/animales/nueva"><i class="fa-solid fa-dog"></i> Nuevo Animal</a>
         </div>
         <div class="social">
