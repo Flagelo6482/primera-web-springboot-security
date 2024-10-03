@@ -15,7 +15,7 @@ import java.util.List;
 * Para acceder al CONTROLLER tenemos que escribir "/animales"
 * */
 @Controller
-@RequestMapping("/animales")
+@RequestMapping({"/animales", "/"})
 public class AnimalController {
 
     @Autowired

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Autenticación</title>
+    <style>
+        body div{
+            text-align: center;
+        }
+
+        label,
+        input[type=text],
+        input[type=password] {
+            display: inline-block;
+            width: 150px;
+            margin: 5px;
+        }
+        input[type=submit]{
+            width: 60px;
+            margin: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h2>Formulario de autenticación</h2>
+    </div>
+    <!--En caso de ejecutar el formulario recibe un error con este parametros capturamos el error-->
+    <div th:if="${param.error}">
+        <h3>Usuario y/o contraseña invalido(s)</h3>
+    </div>
+    <!--En caso de recibir el parametro "logout" que configuramos en nuestro archivo WebSecurityConfig-->
+    <div th:if="${param.logout}">
+        <h3>Ha cerrado su sesión con éxito</h3>
+    </div>
+    <div>
+        <form th:action="@{/login}" method="post">
+            <div>
+                <label>Usuario : </label>
+                <input type="text" name="username" />
+            </div>
+            <div>
+                <label>Contraseña : </label>
+                <input type="password" name="password" />
+            </div>
+            <div>
+                <!--Cuando enviemos este formulario y obtengamos un error mostrara el error en el segundo "div"-->
+                <input type="submit" value="Login" />
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>

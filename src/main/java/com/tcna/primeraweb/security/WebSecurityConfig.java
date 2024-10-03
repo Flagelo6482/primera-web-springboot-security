@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -14,18 +16,24 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+    @Bean //Para registrar este codificador en la fabrica de SPRING
+    public PasswordEncoder passwordEncoder(){
+
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean //Registra un bean en el contenedor de spring
     public InMemoryUserDetailsManager userDetailsManager() {
         //Usuarios en memoria, registrados por defecto
         //Las contraseñas deben estar encriptadas si o si
         UserDetails user1 = User.builder()
                 .username("user1")
-                .password("{bcrypt}$2a$10$rarhLceGOgOSrVSj7sQiZOD25S7ch/uDBoSKp7QAA8a64DohVOevG")
+                .password("$2a$10$rarhLceGOgOSrVSj7sQiZOD25S7ch/uDBoSKp7QAA8a64DohVOevG")
                 .roles("USER")
                 .build();
         UserDetails user2 = User.builder()
                 .username("admin1")
-                .password("{bcrypt}$2a$10$rarhLceGOgOSrVSj7sQiZOD25S7ch/uDBoSKp7QAA8a64DohVOevG")
+                .password("$2a$10$rarhLceGOgOSrVSj7sQiZOD25S7ch/uDBoSKp7QAA8a64DohVOevG")
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user1, user2);
@@ -44,7 +52,10 @@ public class WebSecurityConfig {
                         .requestMatchers("/personas/nueva").hasAnyRole("ADMIN") //Solo a las personas que tengan el rol de ADMIN tienen acceso a este endpoint
                         .requestMatchers("/personas/editar/*","/personas/eliminar/*").hasRole("ADMIN") //El "*" es un parametro, donde el ADMIN tiene acceso
                         .anyRequest().authenticated()) //Cualquier otra petición que hagamos estara autenticada
-                .httpBasic(Customizer.withDefaults())
+                .formLogin(form -> form     //Indicamos el formulario para logearnos
+                        .loginPage("/login")
+                        .permitAll()) //Vamos a permitir a todos a hacer "login"
+                .logout(l -> l.permitAll()) //Cerrado de sesión permitido para todos
                 .exceptionHandling(e -> e.accessDeniedPage("/403")); //Excepcion donde nos envia al endopoint 403(archivo)
         return httpSecurity.build();
     }
