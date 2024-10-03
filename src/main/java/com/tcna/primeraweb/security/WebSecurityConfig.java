@@ -4,25 +4,28 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration //Registra beans
+@EnableWebSecurity
 public class WebSecurityConfig {
 
     @Bean //Registra un bean en el contenedor de spring
     public InMemoryUserDetailsManager userDetailsManager() {
         //Usuarios en memoria, registrados por defecto
+        //Las contraseñas deben estar encriptadas si o si
         UserDetails user1 = User.builder()
                 .username("user1")
-                .password("{bcrypt}$2a$10$CAx815ayRyYSGiN//1Qys.Hn0EFBjaUu83ewYmipeAFWyVmp1nZJK")
+                .password("{bcrypt}$2a$10$rarhLceGOgOSrVSj7sQiZOD25S7ch/uDBoSKp7QAA8a64DohVOevG")
                 .roles("USER")
                 .build();
         UserDetails user2 = User.builder()
-                .username("admin")
-                .password("{bcrypt}$2a$10$CAx815ayRyYSGiN//1Qys.Hn0EFBjaUu83ewYmipeAFWyVmp1nZJK")
+                .username("admin1")
+                .password("{bcrypt}$2a$10$rarhLceGOgOSrVSj7sQiZOD25S7ch/uDBoSKp7QAA8a64DohVOevG")
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(user1, user2);
